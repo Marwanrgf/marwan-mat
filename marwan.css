@@ -38,7 +38,7 @@ header
 }
 .menu 
 {
-    position: relative;
+    position: absolute;
     width: 260px;
     height: 260px;
     display: flex;
@@ -310,7 +310,7 @@ main {
     border-radius: 5px;
     margin: 0 auto;
     max-width: 1200px;
-    margin-bottom: 20px;
+    margin-bottom: 400px;
     overflow-x:visible; /* Förhindra horisontell scroll */
 }
 
@@ -405,6 +405,7 @@ footer {
     bottom: 0;
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
@@ -453,7 +454,7 @@ footer a:hover {
                 flex-wrap: wrap;
             }
     .menu{
-        display: none;
+        display:contents;
         align-items:center;
         position: sticky;
         align-content: space-between;
