@@ -145,6 +145,69 @@ body {
 
 
 
+.warning-box {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 69, 58, 0.95);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    z-index: 9999; /* Se till att den är framför allt */
+}
+
+/* Gör bakgrunden mörkare när varningen visas */
+.dark-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Mörk overlay */
+    z-index: 9998; /* Precis under varningen */
+    display: none; /* Bör vara gömd från start */
+}
+
+/* Se till att overlayen endast visas när varningen finns */
+.dark-overlay.active {
+    display: block;
+}
+
+/* Se till att header alltid syns */
+header {
+    position: relative;
+    z-index: 9999; /* Högre än overlayen */
+}
+
+
+
+        .warning-box button {
+            background: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            color: black;
+            font-weight: bold;
+        }
+
+        .warning-box button:hover {
+            background: lightgray;
+        }
+
+
+
+
+
+
+
 
 /* Header och betyg */
 .recipe-header {

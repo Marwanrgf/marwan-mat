@@ -19,7 +19,18 @@
 
 </head>
 <body >
-    <header>
+    <div class="dark-overlay"></div>
+    <header id="app">
+        <div class="dark-overlay"></div>
+        <div >
+            <div v-if="warningMessage" class="warning-box">
+                <p>{{ warningMessage }}</p>
+                <button @click="closeWarning">OK</button>
+            </div>
+        </div>
+
+
+
         <h1 class="rubrik" id="DarkMode">Marwanskök</h1>
 <div class="menu-container">
     <ul class="menu">
@@ -47,8 +58,8 @@
             <ion-icon name="eye-outline"></ion-icon>
         </a>
     </li>
-    <li id="playButton"  style="--i:5;--clr:#fea600;">
-        <a href="#" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
+    <li  style="--i:5;--clr:#fea600;">
+        <a href="#" @click="playText" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
         </li>
     <li style="--i:6;--clr:#a529ff;">
     <a href="https://www.google.se/?hl=sv" title="Sök recept på google"><ion-icon name="search-outline"></ion-icon></a>
@@ -64,106 +75,20 @@
     /dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0
     /dist/ionicons/ionicons.js"></script>
-    <script>
-        let menuToggle = document.querySelector('.menuToggle');
-        let menu = document.querySelector('.menu');
-        menuToggle.onclick = function(){
-            menu.classList.toggle('active');
-        }
-
- // Kolla om Dark Mode eller Bakgrundsfärg är sparad i localStorage vid sidladdning
-if (localStorage.getItem('darkMode') === 'enabled') {
-    document.body.classList.add('dark-mode');
-} else if (localStorage.getItem('customBgColor')) {
-    document.body.style.backgroundColor = localStorage.getItem('customBgColor');
-}
-
-// Växla Dark Mode och spara inställningen
-document.getElementById('darkModeToggle').addEventListener('click', function() {
-    if (document.body.classList.contains('dark-mode')) {
-        document.body.classList.remove('dark-mode');
-        localStorage.setItem('darkMode', 'disabled');
-
-        // Återställ den senaste bakgrundsfärgen om den fanns
-        if (localStorage.getItem('customBgColor')) {
-            document.body.style.backgroundColor = localStorage.getItem('customBgColor');
-        } else {
-            document.body.style.backgroundColor = ""; // Standardfärg
-        }
-    } else {
-        document.body.classList.add('dark-mode');
-        localStorage.setItem('darkMode', 'enabled');
-        localStorage.removeItem('customBgColor'); // Tar bort bakgrundsfärgen
-        document.body.style.backgroundColor = ""; // Återställ bakgrund vid Dark Mode
-    }
-});
-
-// Uppdaterad funktion för slumpmässig bakgrundsfärg
-document.getElementById('randomBg').addEventListener('click', function() {
-    let randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    document.body.style.backgroundColor = randomColor;
-
-    localStorage.setItem('customBgColor', randomColor);
-    localStorage.setItem('darkMode', 'disabled'); // Stänger av Dark Mode
-    document.body.classList.remove('dark-mode');
-});
-
-
-const fonts = ["Arial, sans-serif", "Georgia, serif", "Courier New, monospace", "Comic Sans MS, cursive"];
-let fontIndex = 0;
-
-document.getElementById('toggleFont').addEventListener('click', function() {
-    fontIndex = (fontIndex + 1) % fonts.length;
-    
-    // Ändra textstilen på alla relevanta element
-    document.body.style.fontFamily = fonts[fontIndex];
-
-    // Applicera även på specifika text-element
-    document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, a, button").forEach(element => {
-        element.style.fontFamily = fonts[fontIndex];
-    });
-});
-
-
-
-document.getElementById('showSecret').addEventListener('click', function() {
-    let secretMessage = document.getElementById('secretMessage');
-    
-    if (secretMessage.style.display === 'block') {
-        secretMessage.style.display = 'none';
-    } else {
-        secretMessage.style.display = 'block';
-    }
-});
 
 
 
 
+    <!-- Vue App för varningar -->
 
-document.getElementById('triggerAnimation').addEventListener('click', function() {
-    let box = document.getElementById('animatedBox');
-    box.classList.add('animated');
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-    setTimeout(() => {
-        box.classList.remove('animated');
-        box.style.display = 'none';
-    }, 1500);
-});
 
-    
-    </script>
 
-    <!--Menyn för mindre skärmar-->
-  <!-- <div class="button-container">
-    <a class="button" href="index.html" title="Home page"><ion-icon name="home-outline"></ion-icon></a>
-    <a class="button" href="#" title="Kontakta oss"><ion-icon name="mail-outline"></ion-icon></a>
-    <a class="button" href="#" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
-    <a class="button" href="https://www.google.se/?hl=sv" title="Sök recept på google"><ion-icon name="search-outline"></ion-icon></a>
-  </div> -->
 </header>
 <div style="margin-bottom: 400px;">
     <p id="secretMessage" style="display: none; color: #00b0fe; text-align: center; margin-top: 10px;">
-        🎉 Surprise! Du hittade ett gömt meddelande!
+        🎉 Surprise! Du hittade ett gömt recept!
     </p>
     <div id="animatedBox"><section class="recipes-image">
         <img src="images/sambosa3.jpg" alt="Sambosa">
