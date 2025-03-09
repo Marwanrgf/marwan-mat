@@ -1,4 +1,3 @@
-<!--Utgår från Margit-->
 <!--Marwan-->
 <!DOCTYPE html>
 <html lang="en">
@@ -12,92 +11,119 @@
 </head>
 <!--Recept sidan-->
 <body >
-    <header>
-        <div class="rubrik"><h1>Marwanskök</h1></div>
-
-        <!--Menyn för större skärmar-->
+    <div class="dark-overlay"></div>
+    <header id="app">
+        <div class="dark-overlay"></div>
+        <div >
+            <div v-if="warningMessage" class="warning-box">
+                <p>{{ warningMessage }}</p>
+                <button @click="closeWarning">OK</button>
+            </div>
+        </div>
+        <h1 class="rubrik">Marwanskök</h1>
+<div class="menu-container">
     <ul class="menu">
     <div class= "menuToggle"><ion-icon name="menu-outline"></ion-icon></div>
     <li style="--i:0;--clr:#ff2972;">
     <a href="index.html" title="Home page"><ion-icon name="home-outline"></ion-icon></a>
     </li>
     <li style="--i:1;--clr:#fee800;">
-    <a href="#"><ion-icon name="person-outline" title="Logga in"></ion-icon></a>
+        <a href="#" id="darkModeToggle" title="Växla Dark Mode">
+            <ion-icon name="moon-outline"></ion-icon>
+        </a>
     </li>
     <li style="--i:2;--clr:#04fc43;">
-    <a href="#"><ion-icon name="settings-outline"></ion-icon></a>
+        <a href="#" id="randomBg" title="Byt bakgrundsfärg">
+            <ion-icon name="color-palette-outline"></ion-icon>
+        </a>
     </li>
     <li style="--i:3;--clr:#fe00f1;">
-    <a href="#" title="Kontakta oss"><ion-icon name="mail-outline"></ion-icon></a>
+        <a href="#" id="toggleFont" title="Byt textstil">
+            <ion-icon name="text-outline"></ion-icon>
+        </a>
     </li>
     <li style="--i:4;--clr:#00b0fe;">
-    <a href="#"><ion-icon name="key-outline"></ion-icon></a>
+        <a href="#" id="showSecret" title="Visa ett hemligt meddelande">
+            <ion-icon name="eye-outline"></ion-icon>
+        </a>
     </li>
-    <li id="playButton"  style="--i:5;--clr:#fea600;">
-        <a href="#" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
+    <li  style="--i:5;--clr:#fea600;">
+        <a href="#" @click="playText" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
         </li>
     <li style="--i:6;--clr:#a529ff;">
-    <a href="https://www.google.se/?hl=sv" title="Sök recept på google"><ion-icon name="search-outline"></ion-icon></ion-icon></a>
+    <a href="https://www.google.se/?hl=sv" title="Sök recept på google"><ion-icon name="search-outline"></ion-icon></a>
     </li>
     <li style="--i:7;--clr:#01bdab;">
-    <a href="#"><ion-icon name="camera-outline"></ion-icon></a>
+        <a href="#" id="triggerAnimation" title="Starta en cool animation">
+            <ion-icon name="sparkles-outline"></ion-icon>
+        </a>
     </li>
     </ul>
+</div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0
     /dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0
     /dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
-        let menuToggle = document.querySelector('.menuToggle');
-        let menu = document.querySelector('.menu');
-        menuToggle.onclick = function(){
-            menu.classList.toggle('active');
-        }
+
+
+ 
+
     </script>
-    
+
     <!--Menyn för mindre skärmar-->
-      <div class="button-container">
-        <a class="button" href="index.html" title="Home page"><ion-icon name="home-outline"></ion-icon></a>
-        <a class="button" href="#" title="Kontakta oss"><ion-icon name="mail-outline"></ion-icon></a>
-        <a class="button" href="#" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
-        <a class="button" href="https://www.google.se/?hl=sv" title="Sök recept på google"><ion-icon name="search-outline"></ion-icon></a>
-      </div>
-
+  <!-- <div class="button-container">
+    <a class="button" href="index.html" title="Home page"><ion-icon name="home-outline"></ion-icon></a>
+    <a class="button" href="#" title="Kontakta oss"><ion-icon name="mail-outline"></ion-icon></a>
+    <a class="button" href="#" title="Märkera en text för att spela upp ljudet"><ion-icon name="volume-medium-outline"></ion-icon></a>
+    <a class="button" href="https://www.google.se/?hl=sv" title="Sök recept på google"><ion-icon name="search-outline"></ion-icon></a>
+  </div> -->
 </header>
+<p id="secretMessages" style="display: none; text-align: center; margin-top: 10px;">
+    🎉 Surprise! Du hittade ett gömt recept!
+</p>
+<div id="animatedBox"><section class="recipes-image">
+    <img src="images/sambosa3.jpg" alt="Sambosa">
+</section></div>
 
-<div class="image-container">
-    <main>
-        <div class="recipe-image">
-            <h1>Recept för Sambosa</h1>
-            <div class="grad">
-            <h2>Svårighetsgraden:</h2>
+<div class="recipe-wrapper">
+    <main class="recipe-card">
+        <div class="recipe-header">
+            <h1 class="recipe-title">Recept för Sambosa</h1>
+            <div class="difficulty-badge">
+                <h2>Svårighetsgrad:</h2>
                 <ion-icon name="star-sharp"></ion-icon>
                 <ion-icon name="star-sharp"></ion-icon>
                 <ion-icon name="star-half-sharp"></ion-icon>
                 <ion-icon name="star-outline"></ion-icon>
             </div>
-            <div class="img-sambosa">
+        </div>
+
+        <div class="recipes-image">
             <img src="images/sambosa3.jpg" alt="Sambosa">
         </div>
 
-        <!--Betygsfunktionen-->
-        <div class="rating">
+        <section class="rating-section">
+            <div class="rating-stars">
+                <input type="radio" id="rate1" name="rating" value="1"><label for="rate1"></label>
+                <input type="radio" id="rate2" name="rating" value="2"><label for="rate2"></label>
+                <input type="radio" id="rate3" name="rating" value="3"><label for="rate3"></label>
+                <input type="radio" id="rate4" name="rating" value="4"><label for="rate4"></label>
+                <input type="radio" id="rate5" name="rating" value="5"><label for="rate5"></label>
+            </div>
             
-             <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
-             <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
-             <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
-             <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
-             <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
-             <div class="rating-text">Betygsätt</div>
-        </div>
-        </div>
-        
-        <div class="recipe-details">
-            <h3>Tips från coachen som man bör ta med sig:</h3>
-            <p> "Var inte rädd för att experimentera med olika fyllningar och former på dina sambosor. 
-                Du kan använda olika kött, grönsaks och kryddkombinationer för att skapa en mängd olika smakprofiler."</p>
-            <p>.........................................................................................</p>
-                <h2>Ingredienser:</h2>
+        </section>
+
+        <section class="recipe-tips">
+            <h3>Tips från coachen:</h3>
+            <p>"Var inte rädd för att experimentera med olika fyllningar och former på dina sambosor. 
+                Du kan använda olika kött, grönsaks och kryddkombinationer för att skapa en mängd olika smakprofiler."
+            </p>
+        </section>
+
+        <section class="ingredients">
+            <h2>Ingredienser:</h2>
             <ul>
                 <li>250 g köttfärs</li>
                 <li>1 lök, finhackad</li>
@@ -109,7 +135,10 @@
                 <li>12 stycken filodegsblad</li>
                 <li>Smör till pensling</li>
             </ul>
-            <h2>Tillagning cr 45min-1h:</h2>
+        </section>
+
+        <section class="instructions">
+            <h2>Tillagning (ca 45 min - 1h):</h2>
             <ol>
                 <li>Bryn köttfärsen i en stekpanna tills den är genomstekt.</li>
                 <li>Tillsätt lök, vitlök, spiskummin, koriander, paprikapulver, salt och peppar. Fräs i ca 5 minuter tills löken är mjuk.</li>
@@ -118,33 +147,29 @@
                 <li>Pensla sambosorna med smält smör och grädda i ugnen på 200°C i cirka 15 minuter eller tills de är gyllenbruna och krispiga.</li>
                 <li>Servera sambosorna varma med en god sås eller chutney.</li>
             </ol>
+        </section>
 
+        <section class="nutrition">
             <h2>Näringsvärde per sambosa:</h2>
-            <div class="inline-list">
-            
-                <li><b>Kalorier: </b>Cirka 180 kcal</li>
-                <li><b>Kolhydrater: </b>Cirka 20 g</li>
-            </div>  
-
-            <div class="inline-list1">
-            <li><b>Fett: </b>Cirka 8 g</li>
-            <li><b>Protein: </b>Cirka 8 g</li>
-            <li><b>Fiber: </b>Cirka 1 g</li>
-            </div>  
-        </div>            
+            <ul class="nutrition-list">
+                <li><b>Kalorier:</b> Cirka 180 kcal</li>
+                <li><b>Kolhydrater:</b> Cirka 20 g</li>
+                <li><b>Fett:</b> Cirka 8 g</li>
+                <li><b>Protein:</b> Cirka 8 g</li>
+                <li><b>Fiber:</b> Cirka 1 g</li>
+            </ul>
+        </section>
     </main>
 </div>
 
+
 <footer>
     
-    <p style="margin-bottom:2px ;">Följ Utvecklaren På Sociala Medier:</p>
-        <a href="https://www.linkedin.com/in/marwan-sheikh-918890290?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app"
-     target="_self">Linked In
-    </a>
+    <p style="margin-bottom:2px ;">Följ utvecklaren Marwan på sociala medier:</p>
+
     <a href="https://github.com/Marwanrgf" target="_self"><ion-icon class="icon" name="logo-GitHub" title="GitHub"></ion-icon></a>
 
-    <a href="https://www.linkedin.com/in/marwan-sheikh-918890290?utm_source=share&utm_campaign=share_v
-    ia&utm_content=profile&utm_medium=ios_app"
+    <a href="https://www.instagram.com/marwanrgf/?igsh=ODE2M2hjNTA2dGE1&utm_source=qr#"
     target="_parent"><ion-icon class="icon" name="logo-Instagram" title="Instagram"></ion-icon>
     </a>
    
