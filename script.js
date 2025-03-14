@@ -1,19 +1,62 @@
+// const { createApp, ref } = Vue;
+
+// createApp({
+//     setup() {
+//         const warningMessage = ref("");
+//         const darkOverlay = ref(false);
+
+//         const showWarning = (message) => {
+//             warningMessage.value = message;
+//             darkOverlay.value = true; // Visa mörk bakgrund endast när varningen visas
+//             document.querySelector(".dark-overlay").classList.add("active");
+//         };
+
+//         const closeWarning = () => {
+//             warningMessage.value = "";
+//             darkOverlay.value = false; 
+//             document.querySelector(".dark-overlay").classList.remove("active");
+//         };
+
+
+        
+//         const playText = () => {
+//             if (!window.speechSynthesis) {
+//                 showWarning("Din webbläsare stöder inte text-till-tal.");
+//                 return;
+//             }
+
+//             const selectedText = window.getSelection().toString().trim();
+
+//             if (selectedText) {
+//                 const utterance = new SpeechSynthesisUtterance(selectedText);
+//                 utterance.lang = "sv-SE"; // Sätter språket till svenska
+//                 window.speechSynthesis.speak(utterance);
+//             } else {
+//                 showWarning("Inget text markerad. Markera ett stycke och försök igen.");
+//             }
+//         };
+
+//         return { warningMessage, closeWarning, playText };
+//     }
+// }).mount("#app");
+
 const { createApp, ref } = Vue;
 
 createApp({
     setup() {
         const warningMessage = ref("");
         const darkOverlay = ref(false);
+        let speechInstance = null; // Håller koll på uppläsningen
 
         const showWarning = (message) => {
             warningMessage.value = message;
-            darkOverlay.value = true; // Visa mörk bakgrund endast när varningen visas
+            darkOverlay.value = true;
             document.querySelector(".dark-overlay").classList.add("active");
         };
 
         const closeWarning = () => {
             warningMessage.value = "";
-            darkOverlay.value = false; 
+            darkOverlay.value = false;
             document.querySelector(".dark-overlay").classList.remove("active");
         };
 
@@ -23,21 +66,27 @@ createApp({
                 return;
             }
 
-            const selectedText = window.getSelection().toString().trim();
-
-            if (selectedText) {
-                const utterance = new SpeechSynthesisUtterance(selectedText);
-                utterance.lang = "sv-SE"; // Sätter språket till svenska
-                window.speechSynthesis.speak(utterance);
-            } else {
-                showWarning("Inget text markerad. Markera ett stycke och försök igen.");
+            if (window.speechSynthesis.speaking) {
+                // ✅ Om text redan läses upp → Stoppa den istället
+                window.speechSynthesis.cancel();
+                return;
             }
+
+            let selectedText = window.getSelection().toString().trim();
+
+            if (!selectedText || selectedText.length < 2) {
+                showWarning("Inget text markerad. Markera ett stycke och försök igen.");
+                return;
+            }
+
+            speechInstance = new SpeechSynthesisUtterance(selectedText);
+            speechInstance.lang = "sv-SE";
+            window.speechSynthesis.speak(speechInstance);
         };
 
         return { warningMessage, closeWarning, playText };
     }
 }).mount("#app");
-
 
 
 
